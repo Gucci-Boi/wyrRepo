@@ -1,0 +1,16 @@
+/* changes the background color of the body*/
+body {
+    background-color: #6ddaec;
+    font-family: "Dosis", serif;
+    font-weight: 400;
+}
+
+/* changes the header*/
+.header {
+    font-family: "Sixtyfour Convergence", serif;
+    font-size: 50px;
+    font-weight: 400;
+
+    background-color: grey;
+    color: darkblue;
+}

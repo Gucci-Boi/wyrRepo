@@ -1,0 +1,11 @@
+/* Styles the test alert*/
+#test-only {
+    color: violet;
+    display: block;
+}
+
+/* Styles the real alert*/
+#real-alert {
+    background-color: darkturquoise;
+    color: darkred;
+}
