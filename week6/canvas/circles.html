@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Circles</title>
+
+    <style>
+        #canvas {
+            border: 1px solid black;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="canvas" height="200" width="300"></canvas>
+
+    <script>
+        let canvas = document.getElementById("canvas");
+        let context = canvas.getContext("2d");
+
+        // (x, y, radius, start angle, end angle, (optional boolean) counterclockwise?)
+        // filled half circle
+        context.beginPath();
+        context.arc(100, 100, 50, 0, Math.PI);
+        context.fill();
+
+        // "completes" the circle
+        context.beginPath();
+        context.arc(100, 100, 50, 0, Math.PI, true);
+        context.stroke();
+    </script>
+</body>
+</html>

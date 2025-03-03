@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Text</title>
+
+    <style>
+      #canvas {
+        border: 1px solid black;
+      }
+    </style>
+</head>
+<body>
+    <canvas id="canvas" height="200" width="500"></canvas>
+
+    <script>
+        let canvas = document.getElementById("canvas");
+        let context = canvas.getContext("2d");
+
+        // ("displayed text", x, y)
+        // black bordered, red text
+        context.fillStyle = "red";
+        context.font = "40px Arial";
+        context.fillText("Black outline, red fill", 50, 50);
+        context.strokeText("Black outline, red fill", 50, 50);
+
+        // smaller, cyan text
+        context.fillStyle = "cyan";
+        context.font = "30px Arial";
+        context.fillText("Cyan text", 60, 100);
+    </script>
+</body>
+</html>
