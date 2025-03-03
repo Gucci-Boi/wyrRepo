@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Tabs</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+    <h1>Favorite Foods</h1>
+
+    <div id="tabs">
+        <button data-content-id="sushi" class="tabButton">Sushi</button>
+        <button data-content-id="curry" class="tabButton">Curry</button>
+        <button data-content-id="rice" class="tabButton">Rice</button>
+    </div>
+
+    <div id="sushi" class="tabContent">Sushi has a wide variety of flavors</div>
+    <div id="curry" class="tabContent">Curry is very savory</div>
+    <div id="rice" class="tabContent">Rice compliments many things</div>
+
+<script>
+    // variables
+    let buttons = document.querySelectorAll('.tabButton');
+    let tabsContent = document.querySelectorAll('.tabContent');
+
+    // hides all content
+    tabsContent.forEach(function (divEl) {
+        divEl.style.display = 'none';
+    })
+
+    tabsContent[0].style.display = 'block';
+    buttons[0].classList.add('active');
+
+    // function for each button
+    buttons.forEach(function (buttonEl) {
+        buttonEl.addEventListener('click', function () {
+            // hides content
+            tabsContent.forEach(function (divEl) {
+                divEl.style.display = 'none';
+            })
+
+            // removes the class 'active' for each button
+            buttons.forEach(function (button) {
+                button.classList.remove('active');
+            })
+            // adds the class 'active' to the current button
+            this.classList.add('active');
+
+            // gets id of button
+            let contentId = this.getAttribute('data-content-id');
+
+            // gets div/content using the button id
+            let tabContent = document.querySelector('#' + contentId);
+
+            // shows the button's matching content
+            tabContent.style.display = 'block';
+        })
+    })
+
+
+
+
+
+</script>
+</body>
+</html>
