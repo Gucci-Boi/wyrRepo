@@ -1,0 +1,12 @@
+2. Property ... was accessed during render but is not defined on instance.  5 points
+
+What does this Vue warning message mean?
+To me, this error means the program accessed a value that Vue didn't.
+
+Can you safely ignore it?
+I don't think it can be safely ignored.
+
+What causes it, and how do you fix it?
+Having a value excluded from Vue's access. It can be fixed by making sure the
+    const {createApp, ref, ect.} = Vue
+are being used and returned.

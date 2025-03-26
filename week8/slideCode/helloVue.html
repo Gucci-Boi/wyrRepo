@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Hello Vue</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+</head>
+<body>
+    <div id="app">
+        <h1>Hello Vue</h1>
+        <p>{{messageWithExclamations}}</p>
+        <button v-on:click="addExclamation">Add !</button>
+        <button v-on:click="clearExclamation">Clear !</button>
+    </div>
+
+    <script>
+        const {createApp, ref, computed} = Vue
+
+        createApp({
+            setup() {
+                const originalMessage = ref('Hi')
+                const maxExclamationPoints = ref(0)
+
+                function addExclamation() {
+                    // checks if the amount of '!' is less than 10
+                    if (maxExclamationPoints.value < 10) {
+                        maxExclamationPoints.value++
+                    } else {
+                        alert("Maximum number of exclamation marks reached.")
+                    }
+                }
+
+                function clearExclamation() {
+                    maxExclamationPoints.value = 0
+                }
+
+                const messageWithExclamations = computed(function() {
+                    let computedMessage = originalMessage.value
+
+                    // adds '!' to the copied message
+                    for (let i = 0; i < maxExclamationPoints.value; i++) {
+                        computedMessage += '!'
+                    }
+                    return computedMessage
+                })
+
+                return {
+                    // reactive data (refs)
+                    originalMessage,
+                    maxExclamationPoints,
+
+                    // computed
+                    messageWithExclamations,
+
+                    // function
+                    addExclamation,
+                    clearExclamation
+                }
+            }
+        }).mount("#app")
+    </script>
+</body>
+</html>

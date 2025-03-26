@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>V-Model</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <!---->
+</head>
+<body>
+    <div id="app">
+        <h1>Hello Vue</h1>
+        <label for="name">Enter your name: </label>
+        <input id="name" v-model="name"/>
+
+        <!--Only appears when the user enters text-->
+        <div v-if="name">
+            <p>Your name is {{name}}</p>
+            <button v-on:click="clearName">Clear name</button>
+        </div>
+
+        <!--Appears when the user hasn't entered anything-->
+        <div v-else>
+            <p>...</p>
+        </div>
+
+    </div>
+
+    <script>
+        const {createApp, ref} = Vue
+
+        createApp({
+            setup() {
+                const name = ref('')
+
+                // clears the user input
+                function clearName() {
+                    name.value = ''
+                }
+
+                return {
+                    // reactive data (refs)
+                    name,
+                    clearName
+                }
+            }
+        }).mount("#app")
+    </script>
+</body>
+</html>
