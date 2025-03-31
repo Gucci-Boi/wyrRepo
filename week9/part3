@@ -1,0 +1,16 @@
+How is Vue and Vanilla JavaScript different? 2 points
+
+Compare your solution for part 2 to the earlier Student Club Roster.
+
+What differences do you see?
+
+Which one do you prefer? Why?
+
+    I feel like the normal JavaScript file has simpler HTML while Vue JavaScript file has a bit more complicated HTML
+(mainly because of the v-stuff) but that can save quite a bit of JS. In the Vue solution, there were no event listeners
+because the v-stuff were the callbacks and without all the extra words, the <script> looks cleaner. Vue JavaScript
+variables seem to be shorter than the normal JS variables ( ref() compared to document.querySelector() ).
+
+    Right now, I don't really have a preference, though I do think each one is better suited for different complexities
+of code. To me it looks like normal JS is better for easy/simple programs, while hard/difficult programs should use Vue
+JS. I think intermediate programs is where it comes down to preference.

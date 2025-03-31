@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Student Registration</title>
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
+
+  <link rel="stylesheet" href="style.css" type="text/css">
+</head>
+
+<body>
+  <div id="app">
+    <div id="newStudentFormErrors" class="m-2">
+      <div class="alert alert-danger" v-if="formErrors.length > 0">
+        <li v-for="error in formErrors" v-bind:key="error">
+          {{error}}
+        </li>
+      </div>
+    </div>
+
+    <div id="newStudentForm" class="card add-student m-2 p-2">
+      <h4 class="cardTitle">Add new student</h4>
+
+      <div class="form-group mb-3">
+        <label for="name">Name</label>
+        <input id="name" class="formControl" v-model.trim="newStudentName">
+      </div>
+
+      <div class="form-group mb-3">
+        <label for="starID">Star ID</label>
+        <input id="starID" class="formControl" v-model.trim="newStarID">
+      </div>
+
+      <button class="btn btn-primary" v-on:click="addStudent">Add</button>
+    </div>
+
+    <div id="studentListTable" class="card m-2 p-2">
+      <h4 class="cardTitle">Student List</h4>
+      <h5>There are {{studentCount}} student(s) in the class.</h5>
+
+      <div id="studentTable">
+        <table class="table">
+          <thead>
+          <tr class="align-middle">
+            <th>Name</th>
+            <th>StarID</th>
+            <th>Present?</th>
+            <th>Delete</th>
+          </tr>
+          </thead>
+
+          <tbody>
+          <tr v-for="student in sortedStudents" v-bind:key="student.starID" class="align-middle"
+              v-bind:class="{present: student.present, absent: !student.present}">
+            <td>{{student.name}}</td>
+            <td>{{student.starID}}</td>
+            <td>
+              <input type="checkbox" v-model="student.present" v-on:change="arrivedOrLeft(student)">
+              <span class="mx-3" v-if="student.present">Here</span>
+              <span class="mx-3" v-else>Absent</span>
+            </td>
+            <td>
+              <button class="btn btn-danger" v-on:click="deleteStudent(student)">
+                <i class="bi bi-trash-fill"></i> Delete
+              </button>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div id="welcomeOrGoodbyeMessage" class="m-2">
+      <div v-if="mostRecentStudent.name">
+
+        <div v-if="mostRecentStudent.present" class="alert alert-success">
+          Welcome, {{mostRecentStudent.name}}!
+        </div>
+        <div v-else class="alert alert-info">
+          Goodbye {{mostRecentStudent.name}}.
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>
+    const {createApp, ref, computed} = Vue
+
+    createApp({
+      setup() {
+        // variables
+        const newStudentName = ref('')
+        const newStarID = ref('')
+
+        // list for the students
+        const studentList = ref([
+          // example students
+          {name: "Student A", starID: "aa12aa34", present: false},
+          {name: "Student B", starID: "bb12bb34", present: false}
+        ])
+
+        // list for errors
+        const formErrors = ref([])
+
+        // for newest student
+        const mostRecentStudent = ref({})
+
+        const addStudent = () => {
+          // clears the errors array
+          formErrors.value = []
+
+          // checks if the name input is blank or not
+          if (!newStudentName.value) {
+            // adds an error to the formErrors array
+            formErrors.value.push('Student name must be entered')
+          }
+
+          // checks if the starID input is blank or not
+          if (!newStarID.value) {
+            // adds an error to the formErrors array
+            formErrors.value.push('StarID must be entered')
+          }
+
+          // checks there's any errors in the formErrors array
+          if (formErrors.value.length == 0) {
+            // adds student if the array is empty
+            let student = {name: newStudentName.value, starID: newStarID.value, present: false}
+            studentList.value.push(student)
+
+            // clears the textboxes/inputs
+            newStudentName.value = ''
+            newStarID.value = ''
+          }
+        }
+
+        const arrivedOrLeft = (student) => {
+          mostRecentStudent.value = student
+        }
+
+        const deleteStudent = (studentToDelete) => {
+          if (confirm(`Are you sure about deleting ${studentToDelete.name}?`)) {
+            // deletes student from studentList
+            studentList.value = studentList.value.filter( (student) => {
+              return studentToDelete != student
+            })
+          }
+        }
+
+        const sortedStudents = computed( () => {
+          // sorts student array alphabetically
+          return studentList.value.toSorted( (student1, student2) => {
+            return student1.name.localeCompare(student2.name)
+          })
+        })
+
+        const studentCount = computed( () => {
+          return  studentList.value.length
+        })
+
+        return {
+          // active
+          newStudentName,
+          newStarID,
+          studentList,
+          formErrors,
+          mostRecentStudent,
+
+          // functions
+          addStudent,
+          arrivedOrLeft,
+          deleteStudent,
+
+          // computed
+          sortedStudents,
+          studentCount
+        }
+      }
+    }).mount('#app')
+  </script>
+</body>
+</html>
